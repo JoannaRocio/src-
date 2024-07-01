@@ -1,0 +1,125 @@
+@charset "UTF-8";
+
+.body-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background-image: url('../images/fondo-eevee.jpg');
+    background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+    margin: 0; /* Elimina cualquier margen del body */
+}
+
+.container-login {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    width: 240px;
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.label-login {
+	margin-bottom: 5px;
+}
+
+.input-login {
+	display: grid;
+	margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+	width: -webkit-fill-available;
+}
+
+.button-login {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #6591f1;
+    color: white;
+    cursor: pointer;
+}
+
+.button-login:hover {
+    background-color: rgb(56, 115, 237);
+}
+
+.a-tienda {
+	width: -webkit-fill-available;
+    height: 50px;
+}
+
+
+.body-tienda {
+    font-family: Arial, sans-serif;
+    background-image: url('../images/fondo-pikachu-pokebola.jpg');
+    background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+    margin: 0; /* Elimina cualquier margen del body */
+}
+
+.articulos-tienda {
+	display: flex;
+	justify-content: center;
+    margin: 35px;
+}
+
+
+.botonera-tienda {
+	display: flex;
+	background: #d20126;
+    padding: 15px;
+}
+
+.saludo-tienda {
+	text-align: center;
+	font-size: 50px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    color: cornflowerblue;
+}
+
+.nombre-articulo-tienda {
+	font-size: 40px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    color: crimson;
+}
+
+.texto-articulo-tienda {
+	font-size: 22px;
+    -webkit-text-stroke-width: .4px;
+    -webkit-text-stroke-color: black;
+    color: #1439ed;
+}
+
+
+.boton-agregar-carrito-tienda {
+	border-radius: 10px;
+    width: 145px;
+    height: 35px;
+    background-color: cornsilk;
+        background-color: #ee5050;
+    font-size: 16px;
+    -webkit-text-stroke-width: .4px;
+    -webkit-text-stroke-color: black;
+    width: -webkit-fill-available;
+    /* padding: 5px; */
+    margin: 10px;
+}
+
+.boton-agregar-carrito-tienda:hover {
+	background-color: #f1de1b;
+}
+
