@@ -27,7 +27,7 @@
 	<c:out value="${empleado.nombre}"></c:out> 
 </p>
 
-<p>Edad: 
+<p>edad: 
 	<c:out value="${empleado.edad}"></c:out> 
 </p>
 

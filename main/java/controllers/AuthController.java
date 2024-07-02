@@ -1,5 +1,5 @@
 package controllers;
- 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +29,8 @@ public class AuthController extends HttpServlet {
     public AuthController() throws IOException {
     	this.empleadosRepo = EmpleadosRepoSingleton.getInstance(); 
     	this.clientesRepo = EmpleadosRepoSingleton.getInstance();
-    } 
+    	
+    }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -119,11 +120,6 @@ public class AuthController extends HttpServlet {
 		request.getRequestDispatcher("/views/auth/login-admin.jsp").forward(request, response);
 	}
 	
-	private void getLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
-	}
-	
-	
 	private void getPanelAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String pass = request.getParameter("pass");
@@ -137,7 +133,7 @@ public class AuthController extends HttpServlet {
 			
 			sessionDe.setEmpleadoLogueado(_username);
 			
-			response.sendRedirect("empleados");
+			response.sendRedirect("admin");
 		}
 		
 		else {
@@ -152,12 +148,13 @@ public class AuthController extends HttpServlet {
 		Cliente _username = clientesRepo.findByUsernameCliente(username, pass);
 
 		if(_username != null) {
+			System.out.println("Username " + _username);
 			HttpSession session = request.getSession();
 			
 			SessionDecorator sessionDe = new SessionDecorator(session);
 			
 			sessionDe.setClienteLogueado(_username);
-			System.out.println("que hay es sessionDe " + sessionDe);
+			
 			response.sendRedirect("tienda");
 		}
 		
@@ -166,5 +163,9 @@ public class AuthController extends HttpServlet {
 		}
 	}
 	
+	private void getLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
+		
+	}
 
 }

@@ -11,11 +11,11 @@ public class Articulo {
 	} 
 	
 	
-	public Articulo(String nombreArticulo, double precio, int cantidad) {
+	public Articulo(String nombreArticulo, int precio, double cantidad) {
 		super();
 		this.nombreArticulo = nombreArticulo;
 		this.precio = precio;
-		this.cantidad = cantidad;
+		this.cantidad = (int) cantidad;
 	}
 
 

@@ -27,12 +27,12 @@
 
 <form action="admin" method="post">
 	<input type="hidden" value="update" name="accion">
-	<p>ID: <input value="${empleado.id}" name="id" /></p>
-	<p>Nombre: <input value="${empleado.nombre}" name="nombre" /></p>
-	<p>Edad: <input value="${empleado.edad}" name="edad" /></p>
-	<p>Sueldo: <input value="${empleado.sueldo}" name="sueldo" /></p>
+	<p>ID: <input value="${Articulo.id}" name="id" /></p>
+	<p>Articulo: <input value="${Articulo.nombreArticulo}" name="nombre" /></p>
+	<p>Stock: <input value="${Articulo.cantidad}" name="cantidad" /></p>
+	<p>Precio: <input value="${Articulo.precio}" name="precio" /></p>
 	
-	<input type="submit" value="Editar"/>
+	<input type="submit" value="Confirmar"/>
 
 </form>
 

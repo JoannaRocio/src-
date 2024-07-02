@@ -50,7 +50,7 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
 		this.listaArticulos = new ArrayList<Articulo>();
 		Articulo articulo1 = new Articulo("Pokeball", 50, 100);
 		Articulo articulo2 = new Articulo("Superball", 60, 90);
-		Articulo articulo3 = new Articulo("Poción", 40, 80);
+		Articulo articulo3 = new Articulo("PociÃ³n", 40, 80);
 		Articulo articulo4 = new Articulo("Frutas", 30, 70);
 		this.insertArticulo(articulo1);
 		this.insertArticulo(articulo2);
@@ -163,6 +163,41 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
 		this.listaClientes.removeIf( (e) -> e.getId() == id);
 		
 	}
+	//Metodos Articulos 
+
+	public List<Articulo> getAllArticulos() {
+        return new ArrayList<Articulo>(this.listaArticulos);
+    }
+
+    public Articulo findArticuloById(int id)  {
+        return this.listaArticulos.stream()
+            .filter(a -> a.getId() == id)
+            .findAny()
+            .orElse(null);
+    }
+
+    public void insertArticulo(Articulo articulo) {
+        int ultimaId = this.listaArticulos.stream()
+                .map(Articulo::getId)
+                .max(Integer::compare)
+                .orElse(0);
+        
+        articulo.setId(ultimaId + 1);
+        this.listaArticulos.add(articulo);
+    }
+
+    public void updateArticulo(Articulo articulo) {
+        for (int i = 0; i < this.listaArticulos.size(); i++) {
+            if (this.listaArticulos.get(i).getId() == articulo.getId()) {
+                this.listaArticulos.set(i, articulo);
+                return;
+            }
+        }
+    }
+
+    public void deleteArticulo(int id) {
+        this.listaArticulos.removeIf(a -> a.getId() == id);
+    }
 
 
 	@Override
@@ -173,39 +208,18 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
 
 	@Override
 	public Articulo findByIdArticulo(int id) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listaArticulos.stream()
+	            .filter(a -> a.getId() == id)
+	            .findAny()
+	            .orElse(null);
 	}
 
 
-	@Override
-	public void insertArticulo(Articulo articulo) throws IOException {
-		int ultimaId = this.listaArticulos.stream()
-				.map(Articulo::getId)
-				.max(Integer::compare)
-				.orElse(0);
-		
-		articulo.setId(ultimaId+1);
-		
-		this.listaArticulos.add(articulo);
-		
-	}
-
-
-	@Override
-	public void updateArticulo(Articulo cliente) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void deleteArticulo(int id) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-
-	
 }
+
+
+	
+	
+
+	
+

@@ -88,7 +88,7 @@ public class EmpleadosController extends HttpServlet {
 		
 		request.setAttribute("empleado", emple);
 		
-		request.getRequestDispatcher("/views/empleados/show.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/admin/panel-empleado/panel.jsp").forward(request, response);
 		
 
 	}
