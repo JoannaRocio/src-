@@ -125,7 +125,7 @@
 <header>
 	<div class="botonera-tienda">
 		<a class="a-tienda"><button class="btn">Tienda</button></a>
-		<a class="a-tienda"><button class="btn">Ver Carrito</button></a>
+		<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=ver-carrito"><button class="btn">Ver Carrito</button></a>
 		<a class="a-tienda"><button class="btn">Historial de Compras</button></a>
 		<a class="a-tienda"><button class="btn">Cuenta</button></a>
 		<a class="a-tienda"  href="${pageContext.request.contextPath}/clientes?accion=cerrar-sesion"><button class="btn">Cerrar sesión</button></a>
@@ -136,24 +136,30 @@
 
 	<div class="articulos-tienda">
 
+
 		<c:forEach var="articulo" items="${listita}">
-			<tr>
-				<td> 
-					<div class="flip-card">
-					  <div class="flip-card-inner">
-					    <div class="flip-card-front">
-					      <img class="img-card" src="${pageContext.request.contextPath}/images/item-${articulo.nombreArticulo}.jpg" alt="Avatar">
-					    </div>
-					    <div class="flip-card-back">
-					      <h1 class="nombre-articulo-tienda"><c:out value="${articulo.nombreArticulo}"/></h1>  
-					      <p class="texto-articulo-tienda">Cantidad en stock: <c:out value="${articulo.cantidad}"/></p> 
-					      <p class="texto-articulo-tienda">Precio: $<c:out value="${articulo.precio}"/></p>
-					      <button class="boton-agregar-carrito-tienda">Agregar al carrito</button>
-					    </div>
-					  </div>
-					</div>
-				</td>
-			</tr>
+			<form action="tienda" method="post">
+				<tr>
+					<td> 
+						<div class="flip-card">
+						  <div class="flip-card-inner">
+						    <div class="flip-card-front">
+						      <img class="img-card" src="${pageContext.request.contextPath}/images/item-${articulo.nombreArticulo}.jpg" alt="Avatar">
+						    </div>
+						    <div class="flip-card-back">
+						      <input type="hidden" name="id" value="${articulo.id}"/>
+						      <input type="hidden" name="nombreArticulo" value="${articulo.nombreArticulo}"/>
+						      <input type="hidden" value="agregar-articulo" name="accion"/>
+						      <h1 class="nombre-articulo-tienda"><c:out value="${articulo.nombreArticulo}"/></h1>  
+						      <p class="texto-articulo-tienda">Cantidad en stock: <c:out value="${articulo.cantidad}"/></p> 
+						      <p class="texto-articulo-tienda">Precio: $<c:out value="${articulo.precio}"/></p>
+						      <button class="boton-agregar-carrito-tienda" type="submit" >Agregar al carrito</button>
+						    </div>
+						  </div>
+						</div>
+					</td>
+				</tr>
+			</form>
 		</c:forEach>
 		
 	</div>

@@ -50,7 +50,7 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
 		this.listaArticulos = new ArrayList<Articulo>();
 		Articulo articulo1 = new Articulo("Pokeball", 50, 100);
 		Articulo articulo2 = new Articulo("Superball", 60, 90);
-		Articulo articulo3 = new Articulo("Poción", 40, 80);
+		Articulo articulo3 = new Articulo("Pocion", 40, 80);
 		Articulo articulo4 = new Articulo("Frutas", 30, 70);
 		this.insertArticulo(articulo1);
 		this.insertArticulo(articulo2);
