@@ -12,7 +12,7 @@
 		p {
 			font-weight: bold;
 		    color: black;
-		    background: coral;
+		    background: #98d8cb;
 		}
 		
 		input {

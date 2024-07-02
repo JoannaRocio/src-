@@ -71,12 +71,15 @@
 		        margin: 10px;
 		        width: -webkit-fill-available;
 		        border-radius: 4px;
-		        height: 22px;
 		        text-align: center;
+		        font-size: 18px;
 		    }
 		
 		    .formSaldo {
-		        display: table-caption;
+		        padding: 5px;
+			    width: 240px;
+			    background: ghostwhite;
+			    border-radius: 25px;
 		    }
 		
 		    .boton-mid-saldo {
@@ -135,6 +138,12 @@
 		        width: 100%;
 		        height: 100%;
 		    }
+		    
+		    label {
+		        font-size: 20px;
+			    /* font-weight: bold; */
+			    width: 100%;
+			    }
 		</style>
 		
 		<title>Poketienda - Saldo</title>
@@ -154,25 +163,57 @@
 			</div>
 		</header>
 		
-		<h1 class="saludo-tienda"> Saldo de tu PokeTienda</h1>
+		<h1 class="saludo-tienda" style="color:white;"> Saldo de tu PokeTienda</h1>
 		
 		<div style="text-align: -webkit-center;">
-		    <form class="formSaldo">
-		        <label>Saldo: </label>
+		    <form class="formSaldo" action="clientes"  method="post">
+		        <h3>Saldo en cuenta</h3>
 		        <input type="number" name="saldo" readonly value="${cliente.saldo}" />
 		        
 		        <div></div>
 		        
 		        <label>Ingresar Dinero: </label>
-		        <input type="number" name="addSaldo" />
-		        <button type="submit" class="boton-mid-saldo">Ingresar Saldo</button>
-		        
-		        <div></div>
-		        
-		        <label>Retirar Dinero: </label>
-		        <input type="number" name="retirarSaldo" />
-		        <button type="button" class="boton-mid-saldo">Retirar Saldo</button>
-		    </form>    
+		        <!-- <input type="hidden" value="ingresar-dinero" name="accion"/> -->
+		        <input type="hidden" name="id" value="${cliente.id}"/>
+		        <input required type="number" name="dineroAIngresar" />
+		        <button type="submit" name="accion" value="ingresar-dinero" class="boton-mid-saldo">Ingresar Dinero</button>
+		    </form>  
+		    
+		    <br>
+		    
+		    <form class="formSaldo" action="clientes" method="post">
+		    
+			    <h3>Transferir Dinero</h3>
+			    <h4>Seleccionar usuario a quien desea transferirle dinero:</h4>
+			    
+			    <div>
+				    <select class="dropdown-saldo" name="destinatarioId">
+				        <c:forEach var="cliente1" items="${clientes}">
+				            <c:if test="${cliente1.id != cliente.id}">
+				                <option value="${cliente1.id}">${cliente1.nombre}</option>
+				            </c:if>
+				        </c:forEach>
+				    </select>
+				</div>
+			    <br>
+			    
+			    <label>Cantidad a transferir:</label>
+			    
+			    <input type="number" name="cantidad" required />
+			    
+			    <input type="hidden" name="id" value="${cliente.id}"/>
+				<!-- <input type="hidden" value="transferir-dinero" name="accion"/>	 -->
+			    <button type="submit" name="accion" value="transferir-dinero" class="boton-mid-saldo">Transferir Dinero</button>
+			</form>
+			
+			<br>
+			
+		<c:if test="${not empty mensaje}">
+		    <div class="mensaje">
+		        <c:out value="${mensaje}" />
+		    </div>
+		</c:if>
+				      
 		</div>
 	
 	</body>

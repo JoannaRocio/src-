@@ -15,6 +15,7 @@
         border-collapse: collapse;
 	    margin-bottom: 20px;
 	    background: aliceblue;
+	    font-size: 20px;
         }
 
         th, td {
@@ -29,7 +30,7 @@
 		<header>
 			<div class="botonera-tienda">
 				<a class="a-tienda"  href="${pageContext.request.contextPath}/empleados?accion=ver-panel"><button class="btn">Panel Empleado</button></a>
-				<a class="a-tienda"  href="${pageContext.request.contextPath}/empleados?accion=ver-historial"><button class="btn">Historial de Ventas</button></a>
+				<a class="a-tienda"  href="${pageContext.request.contextPath}/admin?accion=venta"><button class="btn">Historial de Ventas</button></a>
 				<a class="a-tienda"  href="${pageContext.request.contextPath}/empleados?accion=cerrar-sesion"><button class="btn">Cerrar sesión</button></a>
 			</div>
 		</header>

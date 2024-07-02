@@ -21,7 +21,7 @@
 		</div>
 	</header>
 
-	<h1 class="saludo-tienda">Bienvenido <c:out value="${sessionScope.cliente.nombre}" default="Desconocido"></c:out> a la PokeTienda</h1>
+	<h1 class="saludo-tienda">Bienvenido/a <c:out value="${sessionScope.cliente.nombre}" default="Desconocido"></c:out> a la PokeTienda</h1>
 
 <div style="text-align: center;">
 	<div class="articulos-tienda">

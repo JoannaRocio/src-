@@ -43,7 +43,7 @@
 			</div>
 		</header>
 		<div class="contenedor-tabla-empleado">
-		    <h1>POKE-CARRITO</h1>
+		    <h1 class="saludo-tienda">POKE-CARRITO</h1>
 		
 		    <table>
 		        <thead>

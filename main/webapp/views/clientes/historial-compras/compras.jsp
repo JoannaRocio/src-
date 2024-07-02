@@ -36,7 +36,7 @@
 			</div>
 		</header>
 		<div class="contenedor-tabla-empleado">
-		    <h2>Historial de Compras</h2>
+		    <h2 class="saludo-tienda">Historial de Compras</h2>
 		    <table border="1">
 		        <thead>
 		            <tr>

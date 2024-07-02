@@ -14,18 +14,22 @@
 	</head>
 	
 	<style>
-		p {
-			font-weight: bold;
-		    color: black;
-		    width: fit-content;
-		    font-size: 24px;
-		}
-		
-		input {
-		    border-radius: 4px;
-		    height: 22px;
-    	}
-	</style>
+        table {
+            border-collapse: collapse;
+		    margin-bottom: 20px;
+		    background: aliceblue;
+		    width: auto;
+		    font-size: 20px;
+		    
+        }
+
+        th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        }
+
+  	</style>
 	
 	<body class="body-empleado">
 	
@@ -38,26 +42,45 @@
 		</header>
 	
 		<div class="contenedor-tabla-empleado">
-		
-			<h1>Articulo</h1>
-			
-			<p>ID: 
-			    <c:out value="${articulo.id}"></c:out> 
-			</p>
-			
-			<p>Nombre: 
-			    <c:out value="${articulo.nombreArticulo}"></c:out> 
-			</p>
-			
-			<p>Stock: 
-			    <c:out value="${articulo.cantidad}"></c:out> 
-			</p>
-			
-			<p>Precio: 
-			    $<c:out value="${articulo.precio}"></c:out> 
-			</p>
-			
-			
+			<div style="display:flex; justify-content: center; margin: 10px">
+				<div style="margin-right:10px;">
+				<h2>Articulo</h2>
+					<table class="img-card">
+					    <tr>
+					        <th></th>
+					        <th>Detalles</th>
+					    </tr>
+					    <tr>
+					        <td>ID</td>
+					        <td><c:out value="${articulo.id}"/></td>
+					    </tr>
+					    <tr>
+					        <td>Nombre</td>
+					        <td><c:out value="${articulo.nombreArticulo}"/></td>
+					    </tr>
+					    <tr>
+					        <td>Stock</td>
+					        <td><c:out value="${articulo.cantidad}"/></td>
+					    </tr>
+					    <tr>
+					        <td>Precio</td>
+					        <td>$<c:out value="${articulo.precio}"/></td>
+					    </tr>
+					</table>
+				</div>
+				
+				<div style="margin-left:10px; ">
+				<h2>Imagen del producto</h2>
+					<div>
+	                     <img class="img-card" style="border: 3px solid #0802b3;"
+	                         src="${pageContext.request.contextPath}/images/item-${articulo.nombreArticulo}.jpg" 
+	                         alt="Avatar" 
+	                         onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/images/item-Nuevo.jpg';">
+	              	</div>
+				
+				</div>
+			</div>
+
 			<div class="boton-container-admin">
 				<a href="admin?accion=index"><button class="boton-alta-admin">Volver</button></a>
 			</div>
