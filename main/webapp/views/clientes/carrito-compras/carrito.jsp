@@ -6,14 +6,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
+	<meta charset="UTF-8">
 		<title>Poketienda</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
 		<title>Poketienda - Carrito de Compras</title>
-		<style>
+	    <style>
 	        table {
 	        border-collapse: collapse;
-		    margin-bottom: 20px;
+	        margin-bottom: 20px;
 		    background: aliceblue;
 	        }
 	
@@ -28,7 +28,7 @@
 	        font-size: 16px;
 	        margin-right: 10px;
 	        }
-	  	</style>
+	  </style>
 	</head>
 	
 	<body class="body-tienda">
@@ -51,8 +51,7 @@
 		                <th>Producto</th>
 		                <th>Precio unitario</th>
 		                <th>Cantidad</th>
-		                <th>Subtotal</th>
-		                <th>Quitar</th>
+		              	<th>Opcion</th>
 		            </tr>
 		        </thead>
 		        <tbody>
@@ -61,28 +60,19 @@
 			                <td><c:out value="${articulo.nombreArticulo}"/></td>
 			                <td>$<c:out value="${articulo.precio}"/></td>
 			                <td>1</td>
-			                <td>SUBTOTAL</td>
 			                <td><button>Quitar</button></td>
 			            </tr>
 			        </c:forEach>
-		            <tr>
-		                <td>Producto 2</td>
-		                <td>$</td>
-		                <td>X</td>
-		                <td>SUBTOTAL</td>
-		                <td><button>Quitar</button></td>
-		            </tr>
 		        </tbody>
 		        <tfoot>
 		            <tr>
-		                <td colspan="3"><strong>Total:</strong></td>
-		                <td><strong>PRECIO TOTAL</strong></td>
+		                <td colspan="3"><strong>Total a Pagar:</strong></td>
+		                <td><strong>$<c:out value="${total}"/></strong></td>
+		               <!--  <th></th> -->
 		            </tr>
 		        </tfoot>
 		    </table>
-		
-		    <button class="btn-carrito">VOLVER A LA TIENDA</button>
-		    <button class="btn-carrito">PAGAR Y FINALIZAR</button>
-		</div>
+		    <button class="btn" onclick="history.back()">VOLVER A LA TIENDA</button>
+		    <a class="facturas" href="${pageContext.request.contextPath}/tienda?accion=factura"><button class="btn">PAGAR Y FINALIZAR</button></a>
 	</body>
 </html>

@@ -24,10 +24,12 @@ public class TiendaController extends HttpServlet {
 	private ArticuloRepo articulosRepo;
 	
 	private ArrayList<Articulo> listadoCarrito = new ArrayList<Articulo>();
-    
+ 
+	
+	private Double totalPagado = 0.0;
 
     public TiendaController() throws IOException {
-		this.articulosRepo = EmpleadosRepoSingleton.getInstance(); 
+    	this.articulosRepo = EmpleadosRepoSingleton.getInstance(); 
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,6 +43,7 @@ public class TiendaController extends HttpServlet {
 			case "tienda" -> getTienda(request, response);
 			case "ver-carrito" -> getCarrito(request, response);
 			case "ver-compras" -> getCompras(request, response);
+			case "factura" -> getFactura(request, response);
 //			case "show" -> getShow(request, response);
 //			case "edit" -> getEdit(request, response);
 //			case "create" -> getCreate(request, response);
@@ -73,8 +76,7 @@ public class TiendaController extends HttpServlet {
 		Articulo articulo = articulosRepo.findByIdArticulo(id);
 
 		listadoCarrito.add(articulo);
-		//System.out.println(listadoCarrito + " que hay en el listado");
-		
+	
 		response.sendRedirect("tienda");
 		
 	}
@@ -91,12 +93,36 @@ public class TiendaController extends HttpServlet {
 	
 	private void getCarrito(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		System.out.println(listadoCarrito + " estos son los items");
+		
+		double totalP = 0.0;
+		for (Articulo arti : listadoCarrito) {
+            totalP += arti.getPrecio();
+            arti.setTotal(totalP);
+            totalPagado = totalP;
+            
+        }
+		
+		request.setAttribute("total", totalP);
+		
 		request.setAttribute("listita", listadoCarrito);
 		
 		request.getRequestDispatcher("/views/clientes/carrito-compras/carrito.jsp").forward(request, response);
 	}
+	
+	
+	private void getFactura(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		
+		
+		request.setAttribute("total", totalPagado);
+		
+		request.setAttribute("listita", listadoCarrito);
+		
+		request.getRequestDispatcher("/views/clientes/historial-compras/factura.jsp").forward(request, response);
+		
+	}
 
-	private void getCompras(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		private void getCompras(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//request.setAttribute("listita", listadoCarrito);
 		

@@ -18,7 +18,7 @@ import repositories.EmpleadosRepoSingleton;
 import repositories.interfaces.ClienteRepo;
 import repositories.interfaces.EmpleadoRepo;
 
-@WebServlet("/auth")   
+@WebServlet("/auth")  
 public class AuthController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	 
@@ -74,6 +74,7 @@ public class AuthController extends HttpServlet {
 			case "login-admin" -> getLoginAdmin(request, response);
 			case "panel-admin" -> getPanelAdmin(request ,response);
 			case "panel-cliente" -> getPanelCliente(request, response);
+			case "volver-tienda" -> getTienda(request, response);
 		default ->
 			response.sendError(404);
 		}
@@ -166,6 +167,10 @@ public class AuthController extends HttpServlet {
 	private void getLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
 		
+	}
+	
+	private void getTienda(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.sendRedirect("tienda");
 	}
 
 }

@@ -5,17 +5,19 @@ public class Articulo {
 	private String nombreArticulo;
 	private double precio;
 	private int cantidad;
+	private double total;
 	
 	public Articulo() {
 		super();
 	} 
 	
 	
-	public Articulo(String nombreArticulo, int precio, double cantidad) {
+	public Articulo(String nombreArticulo, int precio, double cantidad, double total) {
 		super();
 		this.nombreArticulo = nombreArticulo;
 		this.precio = precio;
 		this.cantidad = (int) cantidad;
+		this.total = total;
 	}
 
 
@@ -58,8 +60,13 @@ public class Articulo {
 		this.cantidad = cantidad;
 	} 
 	
+	public double getTotal() {
+		return total;
+	}
 	
-	
+	public void setTotal(double total) {
+		this.total = total;
+	}
 	
 	
 	

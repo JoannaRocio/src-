@@ -25,10 +25,10 @@ public class ClientesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private ClienteRepo clientesRepo;
-       
+
 
     public ClientesController() throws IOException {
-    	this.clientesRepo = EmpleadosRepoSingleton.getInstance(); 
+		this.clientesRepo = EmpleadosRepoSingleton.getInstance(); 
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -145,9 +145,9 @@ public class ClientesController extends HttpServlet {
 		request.setAttribute("clientes", clientes);
 		
 	    Cliente cliente = clientesRepo.findByIdCliente(idRemitente);
-	    
+
 		request.setAttribute("cliente", cliente);
-	    
+
 	    request.getRequestDispatcher("/views/clientes/panel-saldo/saldo.jsp").forward(request, response);
 	}
 	

@@ -28,7 +28,7 @@ public class ArticulosController extends HttpServlet {
     private ArticuloRepo articulosRepo;
     private Ventrasrepo ventrasrepo;
     
-    
+
     public ArticulosController() throws IOException {
     	this.articulosRepo = EmpleadosRepoSingleton.getInstance(); 
     	this.ventrasrepo = EmpleadosRepoSingleton.getInstance(); 
@@ -49,9 +49,7 @@ public class ArticulosController extends HttpServlet {
             default -> response.sendError(404);
         }
     }
-    
-    
-    
+        
     private void getCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/views/admin/panel-empleado/create.jsp").forward(request, response);
     }
@@ -79,15 +77,14 @@ public class ArticulosController extends HttpServlet {
     }
     
     
-  //MOSTRAR historial
+    //MOSTRAR historial
+
     protected void getHistorial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	List<ventas> listaVentas = ventrasrepo.getListaVenta();
         request.setAttribute("ventas", listaVentas);
         request.getRequestDispatcher("/views/admin/historial-venta/ventas.jsp").forward(request, response);
     }
     
-    
-
     private void getIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Articulo> listArticulos = articulosRepo.getAllArticulo();
         
@@ -121,7 +118,10 @@ public class ArticulosController extends HttpServlet {
         String sPrecio = request.getParameter("precio");
         double precio = Double.parseDouble(sPrecio);
         
-        Articulo articulo = new Articulo(nombre, cantidad, precio);
+        String sTotal = request.getParameter("precio");
+        double total = Double.parseDouble(sPrecio);
+        
+        Articulo articulo = new Articulo(nombre, cantidad, precio, total);
         
         articulosRepo.insertArticulo(articulo);
         
@@ -139,6 +139,9 @@ public class ArticulosController extends HttpServlet {
         
         String sPrecio = request.getParameter("precio");
         double precio = Double.parseDouble(sPrecio);
+        
+        String sTotal = request.getParameter("total");
+        double total = Double.parseDouble(sTotal);
         
         Articulo articulo = articulosRepo.findByIdArticulo(id);
         
