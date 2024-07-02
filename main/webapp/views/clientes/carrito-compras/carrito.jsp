@@ -6,14 +6,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <title>CARRITO</title>
-	    <style>
+		<meta charset="UTF-8">
+		<title>Poketienda</title>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
+		<title>Poketienda - Carrito de Compras</title>
+		<style>
 	        table {
-	        width: 100%;
 	        border-collapse: collapse;
-	        margin-bottom: 20px;
+		    margin-bottom: 20px;
+		    background: aliceblue;
 	        }
 	
 	        th, td {
@@ -22,16 +23,28 @@
 	        text-align: center;
 	        }
 	
-	        .btn {
+	        .btn-carrito {
 	        padding: 10px 20px;
 	        font-size: 16px;
 	        margin-right: 10px;
 	        }
-	  </style>
+	  	</style>
 	</head>
-	<body>
-	    <h1>POKE-CARRITO</h1>
 	
+	<body class="body-tienda">
+	
+		<header>
+			<div class="botonera-tienda">
+				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=tienda"><button class="btn">Tienda</button></a>
+				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=ver-carrito"><button class="btn">Ver Carrito</button></a>
+				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=ver-compras"><button class="btn">Historial de Compras</button></a>
+				<a class="a-tienda" href="${pageContext.request.contextPath}/clientes?accion=ver-saldo"><button class="btn">Cuenta</button></a>
+				<a class="a-tienda"  href="${pageContext.request.contextPath}/clientes?accion=cerrar-sesion"><button class="btn">Cerrar sesión</button></a>
+			</div>
+		</header>
+		<div class="contenedor-tabla-empleado">
+		    <h1>POKE-CARRITO</h1>
+		
 		    <table>
 		        <thead>
 		            <tr>
@@ -68,7 +81,8 @@
 		        </tfoot>
 		    </table>
 		
-		    <button class="btn">VOLVER A LA TIENDA</button>
-		    <button class="btn">PAGAR Y FINALIZAR</button>
+		    <button class="btn-carrito">VOLVER A LA TIENDA</button>
+		    <button class="btn-carrito">PAGAR Y FINALIZAR</button>
+		</div>
 	</body>
 </html>

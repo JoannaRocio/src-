@@ -91,7 +91,7 @@ public class ArticulosController extends HttpServlet {
         
         request.setAttribute("articulo", articulo);
         
-        request.getRequestDispatcher("/views/admin/panel-empleado/panel.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/admin/panel-empleado/show.jsp").forward(request, response);
     }
 
     private void getIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

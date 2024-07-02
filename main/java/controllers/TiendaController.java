@@ -40,6 +40,7 @@ public class TiendaController extends HttpServlet {
 		switch (accion) {
 			case "tienda" -> getTienda(request, response);
 			case "ver-carrito" -> getCarrito(request, response);
+			case "ver-compras" -> getCompras(request, response);
 //			case "show" -> getShow(request, response);
 //			case "edit" -> getEdit(request, response);
 //			case "create" -> getCreate(request, response);
@@ -89,12 +90,17 @@ public class TiendaController extends HttpServlet {
 
 	
 	private void getCarrito(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		System.out.println(listadoCarrito + " estos son los items");
 		
 		request.setAttribute("listita", listadoCarrito);
 		
 		request.getRequestDispatcher("/views/clientes/carrito-compras/carrito.jsp").forward(request, response);
+	}
+	
+	private void getCompras(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//request.setAttribute("listita", listadoCarrito);
+		
+		request.getRequestDispatcher("/views/clientes/historial-compras/compras.jsp").forward(request, response);
 	}
 
 }

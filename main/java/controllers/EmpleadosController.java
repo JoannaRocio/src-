@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import decorators.SessionDecorator;
 import exceptions.EmpleadoDeslogueadoException;
+import models.Articulo;
 import models.Empleado;
 import repositories.EmpleadosRepoSingleton;
+import repositories.interfaces.ArticuloRepo;
 import repositories.interfaces.EmpleadoRepo;
 
 /** 
@@ -25,10 +27,13 @@ public class EmpleadosController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private EmpleadoRepo empleadosRepo;
+	
+	private ArticuloRepo articulosRepo;
        
 
     public EmpleadosController() throws IOException {
     	this.empleadosRepo = EmpleadosRepoSingleton.getInstance(); 
+    	this.articulosRepo = EmpleadosRepoSingleton.getInstance(); 
     }
 
 	
@@ -41,11 +46,12 @@ public class EmpleadosController extends HttpServlet {
 			accion = Optional.ofNullable(accion).orElse("index");
 			System.out.println("EMPLEADOS CONTROLLER " + accion);
 			switch (accion) {
-				case "index" -> getIndex(request, response);
-				case "bienvenida" -> getBienvenida(request, response);
 				case "show" -> getShow(request, response);
 				case "edit" -> getEdit(request, response);
 				case "create" -> getCreate(request, response);
+				case "ver-panel" -> getVerPanel(request, response);
+				case "ver-historial" -> getVerHistorial(request, response);
+				case "cerrar-sesion" -> getCerrarSesion(request, response);
 			default ->
 				response.sendError(404);
 			}
@@ -56,9 +62,23 @@ public class EmpleadosController extends HttpServlet {
 	}
 
 	
-	private void getBienvenida(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.sendRedirect("views/empleados/bienvenida.jsp");
-		request.getRequestDispatcher("/views/empleados/bienvenida.jsp").forward(request, response);
+	private void getVerPanel(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Articulo> listArticulos = articulosRepo.getAllArticulo();
+        
+        request.setAttribute("listaArticulos", listArticulos);
+        
+        request.getRequestDispatcher("/views/admin/panel-empleado/index.jsp").forward(request, response);
+	}
+	
+	private void getVerHistorial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/views/admin/historial-venta/ventas.jsp").forward(request, response);
+	}
+	
+	private void getCerrarSesion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    SessionDecorator sDec = new SessionDecorator(request.getSession());
+
+	    sDec.getSession().invalidate();
+		request.getRequestDispatcher("/views/auth/login-admin.jsp").forward(request, response);
 	}
 
 
@@ -88,26 +108,15 @@ public class EmpleadosController extends HttpServlet {
 		
 		request.setAttribute("empleado", emple);
 		
-		request.getRequestDispatcher("/views/admin/panel-empleado/panel.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/admin/panel-empleado/show.jsp").forward(request, response);
 		
 
-	}
-
-
-	private void getIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
-		
-		List<Empleado> listEmp = empleadosRepo.getAll();
-		
-		request.setAttribute("listita", listEmp);
-		
-		request.getRequestDispatcher("/views/empleados/index.jsp").forward(request, response);
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String accion = request.getParameter("accion");
-		//accion = Optional.ofNullable(accion).orElse("insert");
 		
 		if(accion == null) {
 			response.sendError(400, "No se brindó una acción.");

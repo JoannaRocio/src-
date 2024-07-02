@@ -35,6 +35,8 @@ public class ClientesController extends HttpServlet {
 			String accion = request.getParameter("accion");
 			accion = Optional.ofNullable(accion).orElse("index");
 			switch (accion) {
+				case "ver-tienda" -> getVerTienda(request, response);
+				case "ver-saldo" -> getVerSaldo(request, response);
 				case "cerrar-sesion" -> getCerrarSesion(request, response);
 			default ->
 				response.sendError(404);
@@ -54,4 +56,11 @@ public class ClientesController extends HttpServlet {
 		request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
 	}
 	
+	private void getVerSaldo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/views/clientes/panel-saldo/saldo.jsp").forward(request, response);
+    }
+	
+	private void getVerTienda(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/views/clientes/tienda/tienda.jsp").forward(request, response);
+    }
 }

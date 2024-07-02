@@ -1,14 +1,15 @@
+<%-- <%@page import="repositories.EmpleadosRepoSingleton"%>
+<%@page import="models.Empleado"%>
+<%@page import="repositories.interfaces.EmpleadoRepo"%> --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
 
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Poketienda - Editar</title>
+		<title>Poketienda - Ver articulo</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
 	</head>
 	
@@ -16,18 +17,18 @@
 		p {
 			font-weight: bold;
 		    color: black;
-		    background: coral;
+		    width: fit-content;
+		    font-size: 24px;
 		}
 		
 		input {
-			width: -webkit-fill-available;
 		    border-radius: 4px;
 		    height: 22px;
-		    text-align: center;
     	}
 	</style>
 	
 	<body class="body-empleado">
+	
 		<header>
 			<div class="botonera-tienda">
 				<a class="a-tienda"  href="${pageContext.request.contextPath}/empleados?accion=ver-panel"><button class="btn">Panel Empleado</button></a>
@@ -35,25 +36,32 @@
 				<a class="a-tienda"  href="${pageContext.request.contextPath}/empleados?accion=cerrar-sesion"><button class="btn">Cerrar sesión</button></a>
 			</div>
 		</header>
-		
-		<div class="contenedor-tabla-empleado">
-			<h1 >Editar</h1>
 	
-			<form class="input-admin" action="admin" method="post">
-				<input type="hidden" value="update" name="accion">
-				<p>ID: <input required readonly value="${articulo.id}" name="id" /></p>
-				<p>Articulo: <input type="text" required value="${articulo.nombreArticulo}" name="nombre" /></p>
-				<p>Stock: <input type="number" required value="${articulo.cantidad}" name="cantidad" /></p>
-				<p>Precio: <input type="number" required value="${articulo.precio}" name="precio" /></p>
-				
-				<input class="boton-mid-admin" type="submit" value="Confirmar"/>
+		<div class="contenedor-tabla-empleado">
+		
+			<h1>Articulo</h1>
 			
-			</form>
+			<p>ID: 
+			    <c:out value="${articulo.id}"></c:out> 
+			</p>
 			
-			<div style="margin-top: 10px;">
-				<a href="admin?accion=index"><button class="boton-mid-admin">Volver</button></a>
+			<p>Nombre: 
+			    <c:out value="${articulo.nombreArticulo}"></c:out> 
+			</p>
+			
+			<p>Stock: 
+			    <c:out value="${articulo.cantidad}"></c:out> 
+			</p>
+			
+			<p>Precio: 
+			    $<c:out value="${articulo.precio}"></c:out> 
+			</p>
+			
+			
+			<div class="boton-container-admin">
+				<a href="admin?accion=index"><button class="boton-alta-admin">Volver</button></a>
 			</div>
-				
 		</div>
+		
 	</body>
 </html>
