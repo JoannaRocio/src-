@@ -38,36 +38,36 @@ public class ArticulosController extends HttpServlet {
         System.out.println("ARTICULOS CONTROLLER " + accion);
         switch (accion) {
             case "index" -> getIndex(request, response);
-            case "panel" -> getShow(request, response);
+            case "show" -> getShow(request, response);
             case "edit" -> getEdit(request, response);
             case "create" -> getCreate(request, response);
+            case "delete" -> postDelete(request, response);
             default -> response.sendError(404);
         }
     }
-    
-    // protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	// 	SessionDecorator sDec = new SessionDecorator(request.getSession());
-	// 	try {
-	// 		sDec.getEmpleadoLogueado();
+   /* protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		SessionDecorator sDec = new SessionDecorator(request.getSession());
+		try {
+			sDec.getEmpleadoLogueado();
 
-	// 		String accion = request.getParameter("accion");
-	// 		accion = Optional.ofNullable(accion).orElse("index");
-	// 		System.out.println("Articulos CONTROLLER " + accion);
-	// 		switch (accion) {
-	// 			case "index" -> getIndex(request, response);
-	// 			case "show" -> getShow(request, response);
-	// 			case "edit" -> getEdit(request, response);
-	// 			case "create" -> getCreate(request, response);
-	// 			case "delete" -> postDelete(request, response);
-	// 		default ->
-	// 			response.sendError(404);
-	// 		}
-	// 	} catch (EmpleadoDeslogueadoException e) {
-	// 		response.sendRedirect("auth");
-	// 		return;
-	// 	}
-	// }
-
+			String accion = request.getParameter("accion");
+			accion = Optional.ofNullable(accion).orElse("index");
+			System.out.println("Articulos CONTROLLER " + accion);
+			switch (accion) {
+				case "index" -> getIndex(request, response);
+				case "show" -> getShow(request, response);
+				case "edit" -> getEdit(request, response);
+				case "create" -> getCreate(request, response);
+				case "delete" -> postDelete(request, response);
+			default ->
+				response.sendError(404);
+			}
+		} catch (EmpleadoDeslogueadoException e) {
+			response.sendRedirect("auth");
+			return;
+		}
+	}
+*/
     private void getCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/views/admin/panel-empleado/create.jsp").forward(request, response);
     }
@@ -106,7 +106,7 @@ public class ArticulosController extends HttpServlet {
         String accion = request.getParameter("accion");
         
         if (accion == null) {
-            response.sendError(400, "No se brindï¿½ una acciï¿½n.");
+            response.sendError(400, "No se brindó una acción.");
             return;
         }
         
@@ -114,7 +114,7 @@ public class ArticulosController extends HttpServlet {
             case "insert" -> postInsert(request, response);
             case "update" -> postUpdate(request, response);
             case "delete" -> postDelete(request, response);
-            default -> response.sendError(404, "No existe la acciï¿½n " + accion);
+            default -> response.sendError(404, "No existe la acción " + accion);
         }
     }
 
@@ -131,7 +131,7 @@ public class ArticulosController extends HttpServlet {
         
        articulosRepo.insertArticulo(articulo);
         
-        response.sendRedirect("panel-empleado");
+        response.sendRedirect("admin");
     }
 
     private void postUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -154,7 +154,7 @@ public class ArticulosController extends HttpServlet {
         
         articulosRepo.updateArticulo(articulo);
         
-        response.sendRedirect("panel-empleado");
+        response.sendRedirect("admin");
     }
 
     private void postDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -163,6 +163,6 @@ public class ArticulosController extends HttpServlet {
         
         articulosRepo.deleteArticulo(id);
         
-        response.sendRedirect("panel-empleado");
+        response.sendRedirect("admin");
     }
 }
