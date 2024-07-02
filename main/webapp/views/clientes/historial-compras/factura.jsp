@@ -7,6 +7,7 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <title>Factura</title>
 	    <style>
@@ -27,35 +28,55 @@
 	        font-size: 16px;
 	        margin-right: 10px;
 	        }
+	        
+	        .container-factura {
+	        	padding:10px;
+	        	background: white;
+	        }
+	        
+	        .body-factura {
+		        display: flex;
+			    justify-content: center;
+			    align-items: center;
+			    font-family: Arial, sans-serif;
+			    background-image: url('../images/fondo-squirtle-amarillo.jpg');
+			    background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
+			    background-position: center; /* Centra la imagen */
+			    background-repeat: no-repeat; /* Evita que la imagen se repita */
+			    height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+			    margin: 0; /* Elimina cualquier margen del body */
+		    }
 	  </style>
 	</head>
-	<body>
-	    <h1>FACTURA N° 00007896</h1>
-		<form class="form-login" action="auth" method="post">
-		    <table>
-		        <thead>
-		            <tr>
-		                <th>Producto</th>
-		                <th>Precio</th>
-		            </tr>
-		        </thead>
-		        <tbody>
-		        	<c:forEach var="articulo" items="${listita}">
+	<body class="body-factura">
+		<div class="container-factura">
+		    <h1>FACTURA N° 00007896</h1>
+			<form class="form-login" action="tienda" method="post">
+			    <table>
+			        <thead>
 			            <tr>
-			                <td><c:out value="${articulo.nombreArticulo}"/></td>
-			                <td>$<c:out value="${articulo.precio}"/></td>
+			                <th>Producto</th>
+			                <th>Precio</th>
 			            </tr>
-			        </c:forEach>
-		        </tbody>
-		        <tfoot>
-		            <tr>
-		                <td colspan="3"><strong>TOTAL: $<c:out value="${total}"/></strong></td>
-		            </tr>
-		        </tfoot>
-		    </table>
-		    
-    		<input type="hidden" value="volver-tienda" name="accion"/>
-		    <button class="btn" type="submit">VOLVER A LA TIENDA</button>
-		    </form>
+			        </thead>
+			        <tbody>
+			        	<c:forEach var="articulo" items="${listita}">
+				            <tr>
+				                <td><c:out value="${articulo.nombreArticulo}"/></td>
+				                <td>$<c:out value="${articulo.precio}"/></td>
+				            </tr>
+				        </c:forEach>
+			        </tbody>
+			        <tfoot>
+			            <tr>
+			                <td colspan="3"><strong>TOTAL: $<c:out value="${total}"/></strong></td>
+			            </tr>
+			        </tfoot>
+			    </table>
+			    
+	    		<input type="hidden" value="volver-tienda" name="accion"/>
+			    <button class="btn" type="submit">VOLVER A LA TIENDA</button>
+			</form>
+		</div>
 	</body>
 </html>

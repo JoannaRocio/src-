@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import decorators.SessionDecorator;
 import exceptions.EmpleadoDeslogueadoException;
 import models.Articulo;
-import models.ventas;
+import models.Ventas;
 
 import repositories.EmpleadosRepoSingleton;
 import repositories.interfaces.ArticuloRepo;
-import repositories.interfaces.Ventrasrepo;
+import repositories.interfaces.VentasRepo;
 
 
 
@@ -26,7 +26,7 @@ public class ArticulosController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
     private ArticuloRepo articulosRepo;
-    private Ventrasrepo ventrasrepo;
+    private VentasRepo ventrasrepo;
     
 
     public ArticulosController() throws IOException {
@@ -80,7 +80,7 @@ public class ArticulosController extends HttpServlet {
     //MOSTRAR historial
 
     protected void getHistorial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	List<ventas> listaVentas = ventrasrepo.getListaVenta();
+    	List<Ventas> listaVentas = ventrasrepo.getListaVenta();
         request.setAttribute("ventas", listaVentas);
         request.getRequestDispatcher("/views/admin/historial-venta/ventas.jsp").forward(request, response);
     }
@@ -140,8 +140,8 @@ public class ArticulosController extends HttpServlet {
         String sPrecio = request.getParameter("precio");
         double precio = Double.parseDouble(sPrecio);
         
-        String sTotal = request.getParameter("total");
-        double total = Double.parseDouble(sTotal);
+//        String sTotal = request.getParameter("total");
+//        double total = Double.parseDouble(sTotal);
         
         Articulo articulo = articulosRepo.findByIdArticulo(id);
         
@@ -153,6 +153,29 @@ public class ArticulosController extends HttpServlet {
         
         response.sendRedirect("admin");
     }
+    
+//    private void postEditar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        String sId = request.getParameter("id");
+//        int id = Integer.parseInt(sId);
+//        
+//        String nombre = request.getParameter("nombre");
+//        
+//        String sCantidad = request.getParameter("cantidad");
+//        int cantidad = Integer.parseInt(sCantidad);
+//        
+//        String sPrecio = request.getParameter("precio");
+//        double precio = Double.parseDouble(sPrecio);
+//        
+//        Articulo articulo = articulosRepo.findByIdArticulo(id);
+//        
+//        articulo.setNombreArticulo(nombre);
+//        articulo.setCantidad(cantidad);
+//        articulo.setPrecio(precio);
+//        
+//        articulosRepo.updateArticulo(articulo);
+//        
+//        response.sendRedirect("admin");
+//    }
 
     private void postDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String sId = request.getParameter("id");

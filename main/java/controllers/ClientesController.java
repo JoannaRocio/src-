@@ -155,7 +155,7 @@ public class ClientesController extends HttpServlet {
 		//response.sendRedirect("views/empleados/bienvenida.jsp");
 	    SessionDecorator sDec = new SessionDecorator(request.getSession());
 
-	    // Invalidar la sesi�n
+	    // Invalidar la sesion
 	    sDec.getSession().invalidate();
 		request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
 	}

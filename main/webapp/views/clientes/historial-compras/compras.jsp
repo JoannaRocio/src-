@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <html>
 
 	<head>
@@ -48,15 +47,15 @@
 		            </tr>
 		        </thead>
 		        <tbody>
-		            <c:forEach var="venta" items="${ventas}">
+		            <c:forEach var="listadoCompra" items="${listadoCompra}">
 		                <tr>
-		                    <td>${venta.id}</td>
-		                    <td>${venta.cliente}</td>
-		                    <td>${venta.articulo}</td>
-		                    <td>${venta.cantidad}</td>
-		                    <td>${venta.precioTotal}</td>
+		                    <td>${listadoCompra.id}</td>
+		                    <td>${listadoCompra.cliente}</td>
+		       				<td>${listadoCompra.articulo}</td>
+		                    <td>${listadoCompra.cantidad}</td>
+		                    <td>${listadoCompra.precioTotal}</td>
 		                </tr>
-		            </c:forEach>
+		            </c:forEach> 
 		        </tbody>
 		    </table>
 		</div>

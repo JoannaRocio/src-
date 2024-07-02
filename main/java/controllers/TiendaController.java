@@ -13,13 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import decorators.SessionDecorator;
 import models.Articulo;
-import models.Empleado;
+import models.Cliente;
+import models.Ventas;
 import repositories.EmpleadosRepoSingleton;
 import repositories.interfaces.ArticuloRepo;
-import repositories.interfaces.EmpleadoRepo;
+import repositories.interfaces.ClienteRepo;
+import repositories.interfaces.VentasRepo;
 
 @WebServlet("/tienda")  
 public class TiendaController extends HttpServlet {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private ArticuloRepo articulosRepo;
 	
@@ -27,9 +31,15 @@ public class TiendaController extends HttpServlet {
  
 	
 	private Double totalPagado = 0.0;
+	
+	private ClienteRepo clientesRepo;
+	
+    private VentasRepo ventrasrepo;
 
     public TiendaController() throws IOException {
     	this.articulosRepo = EmpleadosRepoSingleton.getInstance(); 
+    	this.clientesRepo = EmpleadosRepoSingleton.getInstance();
+    	this.ventrasrepo = EmpleadosRepoSingleton.getInstance(); 
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,9 +54,6 @@ public class TiendaController extends HttpServlet {
 			case "ver-carrito" -> getCarrito(request, response);
 			case "ver-compras" -> getCompras(request, response);
 			case "factura" -> getFactura(request, response);
-//			case "show" -> getShow(request, response);
-//			case "edit" -> getEdit(request, response);
-//			case "create" -> getCreate(request, response);
 		default ->
 			response.sendError(404);
 		}
@@ -57,12 +64,14 @@ public class TiendaController extends HttpServlet {
         String accion = request.getParameter("accion");
         
         if (accion == null) {
-            response.sendError(400, "No se brind� una acci�n.");
+            response.sendError(400, "No se brindo una accion.");
             return;
         }
         
         switch (accion) {
             case "agregar-articulo" -> agregarItem(request, response);
+            case "comprar" -> getFactura(request, response);
+            case "volver-tienda" -> getVolverTienda(request, response);
             default -> response.sendError(404, "No existe la acci�n " + accion);
         }
     }
@@ -81,6 +90,14 @@ public class TiendaController extends HttpServlet {
 		
 	}
 	
+//	private void comprarTienda(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		
+//		String sId = request.getParameter("id");
+//		int id = Integer.parseInt(sId);
+//		
+//		request.getRequestDispatcher("/views/clientes/tienda/index.jsp").forward(request, response);
+//	}
+	
 	private void getTienda(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<Articulo> listArticulos = articulosRepo.getAllArticulo();
@@ -93,8 +110,6 @@ public class TiendaController extends HttpServlet {
 	
 	private void getCarrito(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println(listadoCarrito + " estos son los items");
-		
 		double totalP = 0.0;
 		for (Articulo arti : listadoCarrito) {
             totalP += arti.getPrecio();
@@ -102,6 +117,7 @@ public class TiendaController extends HttpServlet {
             totalPagado = totalP;
             
         }
+		
 		
 		request.setAttribute("total", totalP);
 		
@@ -113,6 +129,32 @@ public class TiendaController extends HttpServlet {
 	
 	private void getFactura(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		
+		String sId = request.getParameter("id");
+		int id = Integer.parseInt(sId);
+
+		Cliente cliente = clientesRepo.findByIdCliente(id);
+		
+		double saldoActual = cliente.getSaldo();
+		System.out.println(saldoActual);
+		
+		if (cliente != null) {
+	        if (saldoActual >= totalPagado) { 
+	
+	            double nuevoSaldo = saldoActual - totalPagado;
+	            cliente.setSaldo(nuevoSaldo);
+	            
+	    		for (Articulo arti : listadoCarrito) {
+	                arti.setCantidad(arti.getCantidad() - 1);      
+	            }
+
+	        } else {
+	    		request.setAttribute("total", totalPagado);
+	    		request.setAttribute("listita", listadoCarrito);
+	            request.setAttribute("mensaje", "No posee saldo suficiente para realizar la compra");
+	            request.getRequestDispatcher("/views/clientes/carrito-compras/carrito.jsp").forward(request, response);
+	        }
+	    }
+
 		
 		request.setAttribute("total", totalPagado);
 		
@@ -122,11 +164,25 @@ public class TiendaController extends HttpServlet {
 		
 	}
 
-		private void getCompras(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void getCompras(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("entra a get compras");
+		String sId = request.getParameter("id");
+		int id = Integer.parseInt(sId);
 		
-		//request.setAttribute("listita", listadoCarrito);
+		System.out.println("id cliente " + id);
+		
+		Ventas listadoCompra = ventrasrepo.findByIdVentaCliente(id);
+
+		System.out.println(listadoCompra + "listadocompra");
+        
+		request.setAttribute("listadoCompra", listadoCompra);
 		
 		request.getRequestDispatcher("/views/clientes/historial-compras/compras.jsp").forward(request, response);
+	}
+		
+	private void getVolverTienda(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		listadoCarrito.clear();
+		response.sendRedirect("tienda");
 	}
 
 }

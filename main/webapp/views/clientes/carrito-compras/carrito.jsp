@@ -24,10 +24,19 @@
 	        }
 	
 	        .btn-carrito {
-	        padding: 10px 20px;
-	        font-size: 16px;
-	        margin-right: 10px;
+		        width: 200px;
+		        height: 40px;
+		        font-size: 16px;
+		        font-weight: bold;
+		        background: cornflowerblue;
+		        color: antiquewhite;
+		        border-radius: 24px;
+		        cursor: pointer;
 	        }
+	        
+	        .btn-carrito:hover {
+		    	background: #88aae8;
+		    }
 	  </style>
 	</head>
 	
@@ -44,35 +53,46 @@
 		</header>
 		<div class="contenedor-tabla-empleado">
 		    <h1 class="saludo-tienda">POKE-CARRITO</h1>
-		
-		    <table>
-		        <thead>
-		            <tr>
-		                <th>Producto</th>
-		                <th>Precio unitario</th>
-		                <th>Cantidad</th>
-		              	<th>Opcion</th>
-		            </tr>
-		        </thead>
-		        <tbody>
-		        	<c:forEach var="articulo" items="${listita}">
+		    
+			<form method="post" action="tienda">
+			    <table>
+			        <thead>
 			            <tr>
-			                <td><c:out value="${articulo.nombreArticulo}"/></td>
-			                <td>$<c:out value="${articulo.precio}"/></td>
-			                <td>1</td>
-			                <td><button>Quitar</button></td>
+			                <th>Producto</th>
+			                <th>Precio unitario</th>
+			                <th>Cantidad</th>
+			              	<th>Opcion</th>
 			            </tr>
-			        </c:forEach>
-		        </tbody>
-		        <tfoot>
-		            <tr>
-		                <td colspan="3"><strong>Total a Pagar:</strong></td>
-		                <td><strong>$<c:out value="${total}"/></strong></td>
-		               <!--  <th></th> -->
-		            </tr>
-		        </tfoot>
-		    </table>
-		    <button class="btn" onclick="history.back()">VOLVER A LA TIENDA</button>
-		    <a class="facturas" href="${pageContext.request.contextPath}/tienda?accion=factura"><button class="btn">PAGAR Y FINALIZAR</button></a>
+			        </thead>
+			        <tbody>
+			        	<c:forEach var="articulo" items="${listita}">
+				            <tr>
+				                <td><c:out value="${articulo.nombreArticulo}"/></td>
+				                <td>$<c:out value="${articulo.precio}"/></td>
+				                <td>1</td>
+				                <td><button>Quitar</button></td>
+				            </tr>
+				        </c:forEach>
+			        </tbody>
+			        <tfoot>
+			            <tr>
+			                <td colspan="3"><strong>Total a Pagar:</strong></td>
+			                <td><strong>$<c:out value="${total}"/></strong></td>
+			               <!--  <th></th> -->
+			            </tr>
+			        </tfoot>
+			    </table>
+			    
+			    <input type="hidden" name="id" value="${cliente.id}"/>
+			    <a href="${pageContext.request.contextPath}/tienda?accion=tienda"><button class="btn-carrito">SEGUIR COMPRANDO</button></a>
+			    <a class="facturas"><button type="submit" name="accion" value="comprar" class="btn-carrito">PAGAR Y FINALIZAR</button></a>
+		    </form>
+		    
+		    <br>
+		    <c:if test="${not empty mensaje}">
+			    <div class="mensaje">
+			        <c:out value="${mensaje}" />
+			    </div>
+			</c:if>
 	</body>
 </html>

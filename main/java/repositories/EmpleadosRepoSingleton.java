@@ -7,11 +7,13 @@ import java.util.List;
 import models.Articulo;
 import models.Cliente;
 import models.Empleado;
+import models.Ventas;
 import repositories.interfaces.ArticuloRepo;
 import repositories.interfaces.ClienteRepo;
 import repositories.interfaces.EmpleadoRepo;
+import repositories.interfaces.VentasRepo;
 
-public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, ArticuloRepo {
+public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, ArticuloRepo, VentasRepo {
 	
 	private static EmpleadosRepoSingleton singleton;
 	
@@ -25,8 +27,7 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
 	private List<Empleado> listaEmpleados;
 	private List<Cliente> listaClientes;
 	private List<Articulo> listaArticulos;
-
-    private List<ventas> listaVentas;
+    private List<Ventas> listaVentas;
 	
 	private EmpleadosRepoSingleton() throws IOException {
         this.listaEmpleados = new ArrayList<>();
@@ -48,31 +49,26 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
 		this.insertCliente(cliente4);
 		
         this.listaArticulos = new ArrayList<>();
-        Articulo articulo1 = new Articulo("Pokeball", 50, 100);
-        Articulo articulo2 = new Articulo("Superball", 60, 90);
-        Articulo articulo3 = new Articulo("Pocion", 40, 80);
-        Articulo articulo4 = new Articulo("Frutas", 30, 70);
+		Articulo articulo1 = new Articulo("Pokeball", 50, 100,0);
+		Articulo articulo2 = new Articulo("Superball", 60, 90,0);
+		Articulo articulo3 = new Articulo("Pocion", 40, 80,0);
+		Articulo articulo4 = new Articulo("Frutas", 30, 70,0);
 		this.insertArticulo(articulo1);
 		this.insertArticulo(articulo2);
 		this.insertArticulo(articulo3);
 		this.insertArticulo(articulo4);
         
         this.listaVentas = new ArrayList<>();
-        cargarVentasIniciales();
-    }
-    
-    // M�todo para cargar ventas iniciales
-    private void cargarVentasIniciales() {
-        ventas venta1 = new ventas(1, "Rodrigo", "Pokeball", 2, 200);
-        ventas venta2 = new ventas(2, "Ezequiel", "Superball", 1, 90);
-        ventas venta3 = new ventas(3, "Joanna", "Pocion", 5, 400);
-        ventas venta4 = new ventas(4, "Nahuel", "Frutas", 3, 210);
+    	Ventas venta1 = new Ventas(1, 1, "Rodrigo", "Pokeball", 2, 200);
+        Ventas venta2 = new Ventas(2, 2, "Ezequiel", "Superball", 1, 90);
+        Ventas venta3 = new Ventas(3, 3, "Joanna", "Pocion", 5, 400);
+        Ventas venta4 = new Ventas(4, 4, "Nahuel", "Frutas", 3, 210);
         
         this.listaVentas.add(venta1);
         this.listaVentas.add(venta2);
         this.listaVentas.add(venta3);
         this.listaVentas.add(venta4);
-    }
+    }    
 	
 	// METODOS EMPLEADOS
 
@@ -223,13 +219,13 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
     // METODOS VENTAS
 
 
-    public List<ventas> getListaVenta() {
+    public List<Ventas> getListaVenta() {
         return new ArrayList<>(listaVentas);
     }
 
-    public void insertVenta(ventas venta) {
+    public void insertVenta(Ventas venta) {
         int ultimaId = this.listaVentas.stream()
-                .map(ventas::getId)
+                .map(Ventas::getId)
                 .max(Integer::compare)
                 .orElse(0);
         
@@ -238,21 +234,29 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
     }
 
 	@Override
-	public void updateVenta(ventas venta) throws IOException {
+	public void updateVenta(Ventas venta) throws IOException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<ventas> getAllVentas() throws IOException {
+	public List<Ventas> getAllVentas() throws IOException {
 		return new ArrayList<>(listaVentas);
 		
 	}
 
 	@Override
-	public ventas findByIdVenta(int id) throws IOException {
-		// TODO Auto-generated method stub
+	public Ventas findByIdVenta(int id) throws IOException {
 		return null;
+		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public Ventas findByIdVentaCliente(int id) throws IOException {
+		return this.listaVentas.stream()
+				.filter(a -> a.getId_cliente() == id)
+				.findAny()
+				.orElse(null);
 	}
 
 	@Override

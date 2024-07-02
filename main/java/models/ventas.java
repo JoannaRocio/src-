@@ -1,27 +1,37 @@
 package models;
 
-public class ventas {
+public class Ventas {
     private int id;
+    private int id_cliente;
     private String cliente;
     private String articulo;
     private int cantidad;
     private double precioTotal;
 
-    public ventas(int id, String cliente, String articulo, int cantidad, double precioTotal) {
+    public Ventas(int id, int id_cliente, String cliente, String articulo, int cantidad, double precioTotal) {
         this.id = id;
+        this.id_cliente = id_cliente;
         this.cliente = cliente;
         this.articulo = articulo;
         this.cantidad = cantidad;
         this.precioTotal = precioTotal;
     }
 
-    public int getId() {
+	public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
+    
+    public int getId_cliente() {
+		return id_cliente;
+	}
+
+	public void setId_cliente(int id_cliente) {
+		this.id_cliente = id_cliente;
+	}
 
     public String getCliente() {
         return cliente;
@@ -39,8 +49,12 @@ public class ventas {
         return precioTotal;
     }
 
-    @Override
-    public String toString() {
-        return "Venta [ID=" + id + ", Cliente=" + cliente + ", Articulo=" + articulo + ", Cantidad=" + cantidad + ", Precio Total=" + precioTotal + "]";
-    }
+
+	@Override
+	public String toString() {
+		return "Ventas [id=" + id + ", id_cliente=" + id_cliente + ", cliente=" + cliente + ", articulo=" + articulo
+				+ ", cantidad=" + cantidad + ", precioTotal=" + precioTotal + "]";
+	}
+
+    
 }

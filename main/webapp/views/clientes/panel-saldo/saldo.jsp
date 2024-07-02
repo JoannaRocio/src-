@@ -90,6 +90,11 @@
 		        background: cornflowerblue;
 		        color: antiquewhite;
 		        border-radius: 24px;
+		        cursor: pointer;
+		    }
+		    
+		    .boton-mid-saldo:hover {
+		    	background: #88aae8;
 		    }
 		
 		    .btn {
