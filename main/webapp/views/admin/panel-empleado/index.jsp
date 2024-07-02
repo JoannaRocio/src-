@@ -3,14 +3,14 @@
     
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
-
+	
 <!DOCTYPE html>
 <html>
-	<head>
+<head>
 		<meta charset="UTF-8">
 		<title>Poketienda</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
-	</head>
+</head>
 	
 	<style>
 	    .tabla-empleado {
@@ -59,8 +59,8 @@
 		<header>
 			<div class="botonera-tienda">
 				<a class="a-tienda"  href="${pageContext.request.contextPath}/empleados?accion=ver-panel"><button class="btn">Panel Empleado</button></a>
-				<a class="a-tienda"  href="${pageContext.request.contextPath}/empleados?accion=ver-historial"><button class="btn">Historial de Ventas</button></a>
-				<a class="a-tienda"  href="${pageContext.request.contextPath}/empleados?accion=cerrar-sesion"><button class="btn">Cerrar sesión</button></a>
+				<a class="a-tienda"  href="${pageContext.request.contextPath}/admin?accion=venta"><button class="btn">Historial de Ventas</button></a>
+				<a class="a-tienda"  href="${pageContext.request.contextPath}/empleados?accion=cerrar-sesion"><button class="btn">Cerrar sesion</button></a>
 			</div>
 		</header>
 
@@ -70,43 +70,43 @@
 	    <div class="contenedor-tabla-empleado">
 	    
 		    <table class="tabla-empleado" border="1">
-		        <thead>
-		            <tr>
-		                <th>ID</th>
-		                <th>Artículo</th>
-		                <th>Stock</th>     
-		                <th>Precio</th>   
-		                <th></th>
-		                <th></th>
-		                <th></th>
-		            </tr>
-		        </thead>
-		        
-		        <tbody>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Articulo</th>
+                <th>Stock</th>     
+		        <th>Precio</th>   
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        
+        <tbody>
 		            <c:if test="${empty listaArticulos}">
-			            <tr>
-			                <td colspan="7" style="text-align: center;">No hay artículos disponibles</td>
+                <tr>
+			                <td colspan="7" style="text-align: center;">No hay articulos disponibles</td>
 			            </tr>
 			        </c:if>
 		            <c:forEach var="articulo" items="${listaArticulos}">
 		                <tr style="background: beige;">
-		                    <td> <c:out value="${articulo.id}"/> </td>
-		                    <td> <c:out value="${articulo.nombreArticulo}"/> </td>
-		                    <td> <c:out value="${articulo.cantidad}"/> </td>
+                    <td> <c:out value="${articulo.id}"/> </td>
+                    <td> <c:out value="${articulo.nombreArticulo}"/> </td>
+                    <td> <c:out value="${articulo.cantidad}"/> </td>
 		                    <td> $<c:out value="${articulo.precio}"/> </td>
-		                    <td> <a href="admin?accion=show&id=${articulo.id}">Ver detalle</a> </td>
+                    <td> <a href="admin?accion=show&id=${articulo.id}">Ver detalle</a> </td>
 		                    <td> <a href="admin?accion=edit&id=${articulo.id}">Editar</a> </td>
 		                    <td> <a href="admin?accion=delete&id=${articulo.id}">Eliminar</a> </td>
-		                </tr>
-		            </c:forEach>
-		        </tbody>
-		    </table>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
 		    
 		    <div class="boton-container-admin">
-				<a href="admin?accion=create"><button class="boton-alta-admin">Agregar artículo nuevo</button></a>
+				<a href="admin?accion=create"><button class="boton-alta-admin">Agregar articulo nuevo</button></a>
 			</div>
 		</div>
 
-		
-	</body>
+
+</body>
 </html>

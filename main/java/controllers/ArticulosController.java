@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import decorators.SessionDecorator;
 import exceptions.EmpleadoDeslogueadoException;
 import models.Articulo;
+import models.ventas;
 
 import repositories.EmpleadosRepoSingleton;
 import repositories.interfaces.ArticuloRepo;
+import repositories.interfaces.Ventrasrepo;
 
 
 
@@ -24,11 +26,12 @@ public class ArticulosController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
     private ArticuloRepo articulosRepo;
+    private Ventrasrepo ventrasrepo;
     
     
-
     public ArticulosController() throws IOException {
     	this.articulosRepo = EmpleadosRepoSingleton.getInstance(); 
+    	this.ventrasrepo = EmpleadosRepoSingleton.getInstance(); 
     }
 
 
@@ -38,6 +41,7 @@ public class ArticulosController extends HttpServlet {
         System.out.println("ARTICULOS CONTROLLER " + accion);
         switch (accion) {
             case "index" -> getIndex(request, response);
+            case "venta" -> getHistorial(request, response);
             case "show" -> getShow(request, response);
             case "edit" -> getEdit(request, response);
             case "create" -> getCreate(request, response);
@@ -45,29 +49,9 @@ public class ArticulosController extends HttpServlet {
             default -> response.sendError(404);
         }
     }
-   /* protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SessionDecorator sDec = new SessionDecorator(request.getSession());
-		try {
-			sDec.getEmpleadoLogueado();
-
-			String accion = request.getParameter("accion");
-			accion = Optional.ofNullable(accion).orElse("index");
-			System.out.println("Articulos CONTROLLER " + accion);
-			switch (accion) {
-				case "index" -> getIndex(request, response);
-				case "show" -> getShow(request, response);
-				case "edit" -> getEdit(request, response);
-				case "create" -> getCreate(request, response);
-				case "delete" -> postDelete(request, response);
-			default ->
-				response.sendError(404);
-			}
-		} catch (EmpleadoDeslogueadoException e) {
-			response.sendRedirect("auth");
-			return;
-		}
-	}
-*/
+    
+    
+    
     private void getCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/views/admin/panel-empleado/create.jsp").forward(request, response);
     }
@@ -91,8 +75,18 @@ public class ArticulosController extends HttpServlet {
         
         request.setAttribute("articulo", articulo);
         
-        request.getRequestDispatcher("/views/admin/panel-empleado/show.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/admin/panel-empleado/panel.jsp").forward(request, response);
     }
+    
+    
+  //MOSTRAR historial
+    protected void getHistorial(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	List<ventas> listaVentas = ventrasrepo.getListaVenta();
+        request.setAttribute("ventas", listaVentas);
+        request.getRequestDispatcher("/views/admin/historial-venta/ventas.jsp").forward(request, response);
+    }
+    
+    
 
     private void getIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Articulo> listArticulos = articulosRepo.getAllArticulo();
@@ -106,7 +100,7 @@ public class ArticulosController extends HttpServlet {
         String accion = request.getParameter("accion");
         
         if (accion == null) {
-            response.sendError(400, "No se brindó una acción.");
+            response.sendError(400, "No se brindï¿½ una acciï¿½n.");
             return;
         }
         
@@ -114,7 +108,7 @@ public class ArticulosController extends HttpServlet {
             case "insert" -> postInsert(request, response);
             case "update" -> postUpdate(request, response);
             case "delete" -> postDelete(request, response);
-            default -> response.sendError(404, "No existe la acción " + accion);
+            default -> response.sendError(404, "No existe la acciï¿½n " + accion);
         }
     }
 
@@ -129,7 +123,7 @@ public class ArticulosController extends HttpServlet {
         
         Articulo articulo = new Articulo(nombre, cantidad, precio);
         
-       articulosRepo.insertArticulo(articulo);
+        articulosRepo.insertArticulo(articulo);
         
         response.sendRedirect("admin");
     }

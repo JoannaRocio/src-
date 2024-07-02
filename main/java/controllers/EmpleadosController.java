@@ -27,7 +27,7 @@ public class EmpleadosController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private EmpleadoRepo empleadosRepo;
-	
+       
 	private ArticuloRepo articulosRepo;
        
 
@@ -46,6 +46,7 @@ public class EmpleadosController extends HttpServlet {
 			accion = Optional.ofNullable(accion).orElse("index");
 			System.out.println("EMPLEADOS CONTROLLER " + accion);
 			switch (accion) {
+				case "index" -> getIndex(request, response);
 				case "show" -> getShow(request, response);
 				case "edit" -> getEdit(request, response);
 				case "create" -> getCreate(request, response);

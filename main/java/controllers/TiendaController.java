@@ -27,7 +27,7 @@ public class TiendaController extends HttpServlet {
     
 
     public TiendaController() throws IOException {
-    	this.articulosRepo = EmpleadosRepoSingleton.getInstance(); 
+		this.articulosRepo = EmpleadosRepoSingleton.getInstance(); 
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -54,13 +54,13 @@ public class TiendaController extends HttpServlet {
         String accion = request.getParameter("accion");
         
         if (accion == null) {
-            response.sendError(400, "No se brindó una acción.");
+            response.sendError(400, "No se brindï¿½ una acciï¿½n.");
             return;
         }
         
         switch (accion) {
             case "agregar-articulo" -> agregarItem(request, response);
-            default -> response.sendError(404, "No existe la acción " + accion);
+            default -> response.sendError(404, "No existe la acciï¿½n " + accion);
         }
     }
     
@@ -90,12 +90,12 @@ public class TiendaController extends HttpServlet {
 
 	
 	private void getCarrito(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		request.setAttribute("listita", listadoCarrito);
 		
 		request.getRequestDispatcher("/views/clientes/carrito-compras/carrito.jsp").forward(request, response);
 	}
-	
+
 	private void getCompras(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//request.setAttribute("listita", listadoCarrito);

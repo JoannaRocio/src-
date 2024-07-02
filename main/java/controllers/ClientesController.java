@@ -35,9 +35,9 @@ public class ClientesController extends HttpServlet {
 			String accion = request.getParameter("accion");
 			accion = Optional.ofNullable(accion).orElse("index");
 			switch (accion) {
+				case "cerrar-sesion" -> getCerrarSesion(request, response);
 				case "ver-tienda" -> getVerTienda(request, response);
 				case "ver-saldo" -> getVerSaldo(request, response);
-				case "cerrar-sesion" -> getCerrarSesion(request, response);
 			default ->
 				response.sendError(404);
 			}
@@ -51,7 +51,7 @@ public class ClientesController extends HttpServlet {
 		//response.sendRedirect("views/empleados/bienvenida.jsp");
 	    SessionDecorator sDec = new SessionDecorator(request.getSession());
 
-	    // Invalidar la sesión
+	    // Invalidar la sesiï¿½n
 	    sDec.getSession().invalidate();
 		request.getRequestDispatcher("/views/auth/login.jsp").forward(request, response);
 	}
