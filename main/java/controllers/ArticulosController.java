@@ -75,7 +75,7 @@ public class ArticulosController extends HttpServlet {
         
         request.setAttribute("articulo", articulo);
         
-        request.getRequestDispatcher("/views/admin/panel-empleado/panel.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/admin/panel-empleado/show.jsp").forward(request, response);
     }
     
     
