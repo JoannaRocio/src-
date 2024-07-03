@@ -1,7 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import decorators.SessionDecorator;
 import models.Articulo;
 import models.Cliente;
+import models.Factura;
 import models.Ventas;
 import repositories.EmpleadosRepoSingleton;
 import repositories.interfaces.ArticuloRepo;
 import repositories.interfaces.ClienteRepo;
+import repositories.interfaces.FacturaRepo;
 import repositories.interfaces.VentasRepo;
 
 @WebServlet("/tienda")  
@@ -35,11 +39,16 @@ public class TiendaController extends HttpServlet {
 	private ClienteRepo clientesRepo;
 	
     private VentasRepo ventasRepo;
+    
+    private FacturaRepo facturasRepo;
+    
+    private List<Articulo> listadoArticulos;
 
     public TiendaController() throws IOException {
     	this.articulosRepo = EmpleadosRepoSingleton.getInstance(); 
     	this.clientesRepo = EmpleadosRepoSingleton.getInstance();
-    	this.ventasRepo = EmpleadosRepoSingleton.getInstance(); 
+    	this.ventasRepo = EmpleadosRepoSingleton.getInstance();
+    	this.facturasRepo = EmpleadosRepoSingleton.getInstance();
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -147,7 +156,18 @@ public class TiendaController extends HttpServlet {
 	    		for (Articulo arti : listadoCarrito) {
 	                arti.setCantidad(arti.getCantidad() - 1);      
 	            }
-
+	    		
+	    		Factura factura = new Factura(getNextNumeroFactura(), id, getCurrentDate());
+	    	
+	            for (Articulo arti : listadoCarrito) {
+	                arti.setCantidad(arti.getCantidad() - 1);
+	                factura.agregarArticulo(arti);
+	            }
+	            
+	            facturasRepo.insertFactura(factura);
+	            
+	            request.setAttribute("facturaNueva", factura);
+	            
 	        } else {
 	    		request.setAttribute("total", totalPagado);
 	    		request.setAttribute("listita", listadoCarrito);
@@ -155,8 +175,7 @@ public class TiendaController extends HttpServlet {
 	            request.getRequestDispatcher("/views/clientes/carrito-compras/carrito.jsp").forward(request, response);
 	        }
 	    }
-
-		
+				
 		request.setAttribute("total", totalPagado);
 		
 		request.setAttribute("listita", listadoCarrito);
@@ -165,16 +184,43 @@ public class TiendaController extends HttpServlet {
 		
 	}
 
+	private String getCurrentDate() {
+	    return new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+	}
+	
+	private int getNextNumeroFactura() throws IOException {
+	    int ultimoNumero = facturasRepo.getAllFactura().stream()
+	            .map(Factura::getNumeroFactura)
+	            .max(Integer::compare)
+	            .orElse(0);
+	    return ultimoNumero + 1;
+	}
+	
 	private void getCompras(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException  {
-		System.out.println("entra a get compras");
 		String sId = request.getParameter("id");
 		int id = Integer.parseInt(sId);
 		
 		System.out.println("id cliente " + id);
 		
-		List<Ventas> listadoCompra = ventasRepo.findByIdVentaCliente(id);
+		List<Factura> facturas = facturasRepo.findByIdClienteFactura(id);
         
-		request.setAttribute("listadoCompra", listadoCompra);
+		request.setAttribute("listadoFacturas", facturas);
+		
+        for (Factura arti : facturas) {
+        	listadoArticulos = arti.getArticulos();
+        } 
+        
+        double totalPrecio = 0.0;
+        
+        for (Articulo arti : listadoArticulos) {
+        	totalPrecio += arti.getPrecio();
+        } 
+        
+        request.setAttribute("total", totalPrecio);
+
+        request.setAttribute("articulos", listadoArticulos);
+        
+		request.setAttribute("listadoFacturas", facturas);
 		
 		request.getRequestDispatcher("/views/clientes/historial-compras/compras.jsp").forward(request, response);
 	}

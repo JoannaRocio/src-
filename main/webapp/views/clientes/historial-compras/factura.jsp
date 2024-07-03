@@ -55,17 +55,33 @@
 			    <table>
 			        <thead>
 			            <tr>
-			                <th>Producto</th>
+			                <th>Nro Factura</th>
+			                <th>Id Cliente</th>
+			                <th>Fecha</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+				            <tr>
+				                <td><c:out value="${facturaNueva.numeroFactura}"/></td>
+				                <td><c:out value="${facturaNueva.idCliente}"/></td>
+				                <td><c:out value="${facturaNueva.fecha}"/></td>
+				            </tr>
+			        </tbody>
+			  		<thead>
+			            <tr>
+			                <th>Articulo</th>
+			                <th>Cantidad</th>
 			                <th>Precio</th>
 			            </tr>
 			        </thead>
 			        <tbody>
-			        	<c:forEach var="articulo" items="${listita}">
+			        	<c:forEach var="factura" items="${facturaNueva.articulos}">
 				            <tr>
-				                <td><c:out value="${articulo.nombreArticulo}"/></td>
-				                <td>$<c:out value="${articulo.precio}"/></td>
+				                <td><c:out value="${factura.nombreArticulo}"/></td>
+				                <td><c:out value="1"/></td>
+				                <td><c:out value="${factura.precio}"/></td>
 				            </tr>
-				        </c:forEach>
+				        </c:forEach> 
 			        </tbody>
 			        <tfoot>
 			            <tr>

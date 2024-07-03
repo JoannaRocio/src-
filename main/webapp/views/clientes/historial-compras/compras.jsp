@@ -36,28 +36,48 @@
 		</header>
 		<div class="contenedor-tabla-empleado">
 		    <h2 class="saludo-tienda">Historial de Compras</h2>
+		    <c:forEach var="compra" items="${listadoFacturas}">
 		    <table border="1">
 		        <thead>
 		            <tr>
-		                <th>ID</th>
+		                <th>ID Factura</th>
 		                <th>Cliente</th>
 		                <th>Articulo</th>
+		            </tr>
+		        </thead>
+		        
+		        <tbody>
+		            <tr>
+		                <td><c:out value="${compra.numeroFactura}"/></td>
+		                <td><c:out value="${compra.idCliente}"/></td>
+		                <td><c:out value="${compra.fecha}"/></td>
+		            </tr>
+		        </tbody>
+		        <thead>
+		            <tr>
+		                <th>Articulo</th>
 		                <th>Cantidad</th>
-		                <th>Precio Total</th>
+		                <th>Precio</th>
 		            </tr>
 		        </thead>
 		        <tbody>
-		            <c:forEach var="compra" items="${listadoCompra}">
-		                <tr>
-		                    <td>${compra.id}</td>
-		                    <td>${compra.cliente}</td>
-		       				<td>${compra.articulo}</td>
-		                    <td>${compra.cantidad}</td>
-		                    <td>${compra.precioTotal}</td> 
-		                </tr>
-		            </c:forEach> 
+		        	<c:forEach var="articulo" items="${compra.articulos}">
+			            <tr>
+			                <td><c:out value="${articulo.nombreArticulo}"/></td>
+			                <td><c:out value="1"/></td>
+			                <td><c:out value="${articulo.precio}"/></td>
+			            </tr>
+			        </c:forEach> 
 		        </tbody>
+		        <tfoot>
+		            <tr>
+		                <td colspan="3"><strong>TOTAL: $<c:out value="${total}"/></strong></td>
+		            </tr>
+		       </tfoot>
+		       
 		    </table>
+		    <br>
+		    </c:forEach> 
 		</div>
 	</body>
 </html>

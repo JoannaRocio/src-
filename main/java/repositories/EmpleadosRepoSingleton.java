@@ -7,13 +7,15 @@ import java.util.List;
 import models.Articulo;
 import models.Cliente;
 import models.Empleado;
+import models.Factura;
 import models.Ventas;
 import repositories.interfaces.ArticuloRepo;
 import repositories.interfaces.ClienteRepo;
 import repositories.interfaces.EmpleadoRepo;
+import repositories.interfaces.FacturaRepo;
 import repositories.interfaces.VentasRepo;
 
-public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, ArticuloRepo, VentasRepo {
+public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, ArticuloRepo, VentasRepo, FacturaRepo {
 	
 	private static EmpleadosRepoSingleton singleton;
 	
@@ -28,6 +30,7 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
 	private List<Cliente> listaClientes;
 	private List<Articulo> listaArticulos;
     private List<Ventas> listaVentas;
+    private List<Factura> listaFacturas;
 	
 	private EmpleadosRepoSingleton() throws IOException {
         this.listaEmpleados = new ArrayList<>();
@@ -68,6 +71,15 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
         this.insertVenta(venta2);
         this.insertVenta(venta3);
         this.insertVenta(venta4);
+        
+        this.listaFacturas = new ArrayList<>();
+        Factura factura1 = new Factura(1, 0, "2024-07-01");
+        factura1.agregarArticulo(new Articulo("Pokeball", 50, 2, 0));
+        factura1.agregarArticulo(new Articulo("Frutas", 30, 1, 0));
+        
+        this.insertFactura(factura1);
+        List<Factura> facturas = new ArrayList<>();
+        facturas.add(factura1);
     }    
 	
 	// METODOS EMPLEADOS
@@ -262,6 +274,29 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
 	public void deleteVenta(int id) throws IOException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void insertFactura(Factura factura) {
+        this.listaFacturas.add(factura);
+	}
+
+	@Override
+	public List<Factura> getAllFactura() throws IOException {
+		return new ArrayList<>(this.listaFacturas);
+	}
+
+	@Override
+	public Factura findByIdFactura(int id) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Factura> findByIdClienteFactura(int id) throws IOException {
+		return this.listaFacturas.stream()
+				.filter(a -> a.getIdCliente() == id)
+				.toList();
 	}
 }
 	
