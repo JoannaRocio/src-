@@ -101,7 +101,6 @@ public class ClientesController extends HttpServlet {
 	}
 	
 	private void getTransferirDinero(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("entra 2");
 		String sIdRemitente = request.getParameter("id");
 		int idRemitente = Integer.parseInt(sIdRemitente);
 		
@@ -117,20 +116,14 @@ public class ClientesController extends HttpServlet {
 		String sCantidad = request.getParameter("cantidad");
 		double cantidad = Integer.parseInt(sCantidad);
 		
-		System.out.println(idRemitente + " " + idDestinatario + " " + cantidad);
-
 
         if (remitente != null && destinatario != null) {
             double saldoRemitente = remitente.getSaldo();
 
             if (saldoRemitente >= cantidad) {
-                // Actualizar saldos
+
                 remitente.setSaldo(saldoRemitente - cantidad);
                 destinatario.setSaldo(destinatario.getSaldo() + cantidad);
-
-//                // Guardar cambios
-//                clientesRepo.save(remitente);
-//                clientesRepo.save(destinatario);
 
                 request.setAttribute("mensaje", "Transferencia realizada con exito.");
             } else {

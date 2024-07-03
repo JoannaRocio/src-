@@ -29,9 +29,9 @@
 			<div class="botonera-tienda">
 				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=tienda"><button class="btn">Tienda</button></a>
 				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=ver-carrito"><button class="btn">Ver Carrito</button></a>
-				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=ver-compras"><button class="btn">Historial de Compras</button></a>
+				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=ver-compras&id=${cliente.id}"><button class="btn">Historial de Compras</button></a>
 				<a class="a-tienda" href="${pageContext.request.contextPath}/clientes?accion=ver-saldo"><button class="btn">Cuenta</button></a>
-				<a class="a-tienda"  href="${pageContext.request.contextPath}/clientes?accion=cerrar-sesion"><button class="btn">Cerrar sesión</button></a>
+				<a class="a-tienda" href="${pageContext.request.contextPath}/clientes?accion=cerrar-sesion"><button class="btn">Cerrar sesión</button></a>
 			</div>
 		</header>
 		<div class="contenedor-tabla-empleado">
@@ -47,13 +47,13 @@
 		            </tr>
 		        </thead>
 		        <tbody>
-		            <c:forEach var="listadoCompra" items="${listadoCompra}">
+		            <c:forEach var="compra" items="${listadoCompra}">
 		                <tr>
-		                    <td>${listadoCompra.id}</td>
-		                    <td>${listadoCompra.cliente}</td>
-		       				<td>${listadoCompra.articulo}</td>
-		                    <td>${listadoCompra.cantidad}</td>
-		                    <td>${listadoCompra.precioTotal}</td>
+		                    <td>${compra.id}</td>
+		                    <td>${compra.cliente}</td>
+		       				<td>${compra.articulo}</td>
+		                    <td>${compra.cantidad}</td>
+		                    <td>${compra.precioTotal}</td> 
 		                </tr>
 		            </c:forEach> 
 		        </tbody>

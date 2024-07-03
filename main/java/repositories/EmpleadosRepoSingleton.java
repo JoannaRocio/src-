@@ -64,10 +64,10 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
         Ventas venta3 = new Ventas(3, 3, "Joanna", "Pocion", 5, 400);
         Ventas venta4 = new Ventas(4, 4, "Nahuel", "Frutas", 3, 210);
         
-        this.listaVentas.add(venta1);
-        this.listaVentas.add(venta2);
-        this.listaVentas.add(venta3);
-        this.listaVentas.add(venta4);
+        this.insertVenta(venta1);
+        this.insertVenta(venta2);
+        this.insertVenta(venta3);
+        this.insertVenta(venta4);
     }    
 	
 	// METODOS EMPLEADOS
@@ -241,7 +241,7 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
 
 	@Override
 	public List<Ventas> getAllVentas() throws IOException {
-		return new ArrayList<>(listaVentas);
+		return new ArrayList<>(this.listaVentas);
 		
 	}
 
@@ -252,11 +252,10 @@ public class EmpleadosRepoSingleton implements EmpleadoRepo, ClienteRepo, Articu
 	}
 	
 	@Override
-	public Ventas findByIdVentaCliente(int id) throws IOException {
+	public List<Ventas> findByIdVentaCliente(int id) throws IOException {
 		return this.listaVentas.stream()
 				.filter(a -> a.getId_cliente() == id)
-				.findAny()
-				.orElse(null);
+				.toList();
 	}
 
 	@Override

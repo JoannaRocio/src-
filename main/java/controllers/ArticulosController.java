@@ -20,7 +20,6 @@ import repositories.interfaces.ArticuloRepo;
 import repositories.interfaces.VentasRepo;
 
 
-
 @WebServlet("/admin")
 public class ArticulosController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -119,7 +118,7 @@ public class ArticulosController extends HttpServlet {
         double precio = Double.parseDouble(sPrecio);
         
         String sTotal = request.getParameter("precio");
-        double total = Double.parseDouble(sPrecio);
+        double total = Double.parseDouble(sTotal);
         
         Articulo articulo = new Articulo(nombre, cantidad, precio, total);
         

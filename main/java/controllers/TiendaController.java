@@ -34,12 +34,12 @@ public class TiendaController extends HttpServlet {
 	
 	private ClienteRepo clientesRepo;
 	
-    private VentasRepo ventrasrepo;
+    private VentasRepo ventasRepo;
 
     public TiendaController() throws IOException {
     	this.articulosRepo = EmpleadosRepoSingleton.getInstance(); 
     	this.clientesRepo = EmpleadosRepoSingleton.getInstance();
-    	this.ventrasrepo = EmpleadosRepoSingleton.getInstance(); 
+    	this.ventasRepo = EmpleadosRepoSingleton.getInstance(); 
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,14 +48,15 @@ public class TiendaController extends HttpServlet {
 		
 		String accion = request.getParameter("accion");
 		accion = Optional.ofNullable(accion).orElse("tienda");
-		
+		System.out.println(accion + " accionnnnnnnnnnnnnn");
 		switch (accion) {
 			case "tienda" -> getTienda(request, response);
 			case "ver-carrito" -> getCarrito(request, response);
 			case "ver-compras" -> getCompras(request, response);
+			case "ver-tienda" -> getTienda(request, response);
 			case "factura" -> getFactura(request, response);
 		default ->
-			response.sendError(404);
+			response.sendError(404, "No existe la accion " + accion);
 		}
 		
 	}
@@ -72,7 +73,7 @@ public class TiendaController extends HttpServlet {
             case "agregar-articulo" -> agregarItem(request, response);
             case "comprar" -> getFactura(request, response);
             case "volver-tienda" -> getVolverTienda(request, response);
-            default -> response.sendError(404, "No existe la acci�n " + accion);
+            default -> response.sendError(404, "No existe la accion " + accion);
         }
     }
     
@@ -103,7 +104,7 @@ public class TiendaController extends HttpServlet {
 		List<Articulo> listArticulos = articulosRepo.getAllArticulo();
 		
 		request.setAttribute("listita", listArticulos);
-		
+
 		request.getRequestDispatcher("/views/clientes/tienda/index.jsp").forward(request, response);
 	}
 
@@ -164,16 +165,14 @@ public class TiendaController extends HttpServlet {
 		
 	}
 
-	private void getCompras(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void getCompras(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException  {
 		System.out.println("entra a get compras");
 		String sId = request.getParameter("id");
 		int id = Integer.parseInt(sId);
 		
 		System.out.println("id cliente " + id);
 		
-		Ventas listadoCompra = ventrasrepo.findByIdVentaCliente(id);
-
-		System.out.println(listadoCompra + "listadocompra");
+		List<Ventas> listadoCompra = ventasRepo.findByIdVentaCliente(id);
         
 		request.setAttribute("listadoCompra", listadoCompra);
 		

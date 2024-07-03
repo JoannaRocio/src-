@@ -46,7 +46,7 @@
 			<div class="botonera-tienda">
 				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=tienda"><button class="btn">Tienda</button></a>
 				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=ver-carrito"><button class="btn">Ver Carrito</button></a>
-				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=ver-compras"><button class="btn">Historial de Compras</button></a>
+				<a class="a-tienda" href="${pageContext.request.contextPath}/tienda?accion=ver-compras&id=${cliente.id}"><button class="btn">Historial de Compras</button></a>
 				<a class="a-tienda" href="${pageContext.request.contextPath}/clientes?accion=ver-saldo"><button class="btn">Cuenta</button></a>
 				<a class="a-tienda"  href="${pageContext.request.contextPath}/clientes?accion=cerrar-sesion"><button class="btn">Cerrar sesión</button></a>
 			</div>
@@ -83,8 +83,10 @@
 			        </tfoot>
 			    </table>
 			    
-			    <input type="hidden" name="id" value="${cliente.id}"/>
-			    <a href="${pageContext.request.contextPath}/tienda?accion=tienda"><button class="btn-carrito">SEGUIR COMPRANDO</button></a>
+			   <input type="hidden" name="id" value="${cliente.id}"/>
+			    
+			    <a href="${pageContext.request.contextPath}/tienda?accion=ver-tienda"><button name="accion" value="ver-tienda" class="btn-carrito">SEGUIR COMPRANDO</button></a>
+			    
 			    <a class="facturas"><button type="submit" name="accion" value="comprar" class="btn-carrito">PAGAR Y FINALIZAR</button></a>
 		    </form>
 		    
@@ -94,5 +96,6 @@
 			        <c:out value="${mensaje}" />
 			    </div>
 			</c:if>
+		</div>
 	</body>
 </html>

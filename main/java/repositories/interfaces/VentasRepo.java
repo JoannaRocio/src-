@@ -16,7 +16,7 @@ public interface VentasRepo {
     
     public Ventas findByIdVenta(int id) throws IOException;
     
-    public Ventas findByIdVentaCliente(int id) throws IOException;
+    public List<Ventas> findByIdVentaCliente(int id) throws IOException;
     
     public void deleteVenta(int id) throws IOException;
 }
